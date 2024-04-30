@@ -1,57 +1,24 @@
 <script setup lang="ts">
 import GameField from "@/components/GameField.vue";
+import { matchedRouteKey } from "vue-router";
+import { ref } from "vue";
+const matrix = ref(Array(9).fill(Array(9).fill(0)));
 
-const comingData = [
-  [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ],
-  [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ],
-  [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ],
-  [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ],
-  [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ],
-  [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ],
-  [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ],
-  [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ],
-  [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ],
-];
+function createMatrix() {
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      matrix.value[i][j] = Math.round(Math.random() * 9);
+      console.log(i, j, matrix.value[i][j]);
+    }
+  }
+  console.log(matrix.value);
+}
+
+createMatrix();
 </script>
 
 <template>
-  <game-field />
+  <game-field :matrix="matrix" />
 </template>
 
 <style scoped lang="scss"></style>

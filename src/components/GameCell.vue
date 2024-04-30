@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
+import { defineProps } from "vue";
 
-const num = ref("");
-
-watch(num, () => {
-  if (isNaN(Number(num.value))) {
-    num.value = "";
-  }
+const props = defineProps({
+  cellValue: {
+    type: Number,
+    required: true,
+  },
 });
+const num = ref(props.cellValue);
+
+watch(
+  () => props,
+  () => {
+    num.value = props.cellValue;
+  }
+);
 </script>
 
 <template>
