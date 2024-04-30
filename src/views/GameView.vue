@@ -12,7 +12,19 @@ function createBasicMatrix() {
   return matrix;
 }
 
+function matrixTransposing(matrix: number[][]) {
+  let transposed = [];
+  for (let i = 0; i < 9; i++) {
+    transposed[i] = Array(0);
+    for (let j = 0; j < 9; j++) {
+      transposed[i][j] = matrix[j][i];
+    }
+  }
+  return transposed;
+}
+
 let matrix = createBasicMatrix();
+// let transposed = matrixTransposing(matrix);
 </script>
 
 <template>
