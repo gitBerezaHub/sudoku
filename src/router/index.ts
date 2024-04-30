@@ -1,12 +1,17 @@
+import GameView from "@/views/GameView.vue";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import EnterGameView from "../views/EnterGameView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "home",
-    component: () => {
-      import("../views/GameView.vue");
-    },
+    component: EnterGameView,
+  },
+  {
+    path: "/game",
+    name: "game",
+    component: GameView,
   },
 ];
 
