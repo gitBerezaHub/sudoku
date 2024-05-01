@@ -3,9 +3,10 @@ import GameField from "@/components/GameField.vue";
 import {
   createBasicMatrix,
   matrixTransposing,
-  swapColumns, swapRows,
+  swapColumns,
+  swapRows,
   swapSmallColumns,
-  swapSmallRows
+  swapSmallRows,
 } from "@/logic/logic";
 
 let matrix = createBasicMatrix();

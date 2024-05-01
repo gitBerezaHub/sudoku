@@ -115,7 +115,7 @@ export function swapRows(
   firstRow: number,
   secondRow: number
 ) {
-  let swapped = [];
+  const swapped = [];
   for (let i = 0; i < 9; i++) {
     swapped[i] = Array(0);
     for (let j = 0; j < 9; j++) {
