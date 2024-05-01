@@ -4,8 +4,8 @@ export function createBasicMatrix() {
     matrix[i] = Array(0);
     for (let j = 0; j < 9; j++) {
       matrix[i][j] = Math.floor(((i * 3 + i / 3 + j) % 9) + 1);
-      // matrix[i][j] = ((i * 3 + i / 3 + j) % 9) + 1;
       // matrix[i][j] = `${i}, ${j}`;
+      // matrix[i][j] = ((i * 3 + i / 3 + j) % 9) + 1;
     }
   }
   return matrix;
@@ -22,7 +22,11 @@ export function matrixTransposing(matrix: number[][]) {
   return transposed;
 }
 
-export function swapRows(matrix: number[][], f: number, s: number) {
+export function swapRows(
+  matrix: number[][],
+  firstRow: number,
+  secondRow: number
+) {
   const swapped = [];
   for (let i = 0; i < 9; i++) {
     swapped[i] = Array(0);
@@ -33,18 +37,51 @@ export function swapRows(matrix: number[][], f: number, s: number) {
 
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
-      swapped[Math.floor(f - (f % 3)) + i][
-        Math.floor((f % 3) / 3 + (f % 3) * 3 + j)
+      swapped[Math.floor(firstRow - (firstRow % 3)) + i][
+        Math.floor((firstRow % 3) / 3 + (firstRow % 3) * 3 + j)
       ] =
-        matrix[Math.floor(s - (s % 3)) + i][
-          Math.floor((s % 3) / 3 + (s % 3) * 3 + j)
+        matrix[Math.floor(secondRow - (secondRow % 3)) + i][
+          Math.floor((secondRow % 3) / 3 + (secondRow % 3) * 3 + j)
         ];
 
-      swapped[Math.floor(s - (s % 3)) + i][
-        Math.floor((s % 3) / 3 + (s % 3) * 3 + j)
+      swapped[Math.floor(secondRow - (secondRow % 3)) + i][
+        Math.floor((secondRow % 3) / 3 + (secondRow % 3) * 3 + j)
       ] =
-        matrix[Math.floor(f - (f % 3)) + i][
-          Math.floor((f % 3) / 3 + (f % 3) * 3 + j)
+        matrix[Math.floor(firstRow - (firstRow % 3)) + i][
+          Math.floor((firstRow % 3) / 3 + (firstRow % 3) * 3 + j)
+        ];
+    }
+  }
+  return swapped;
+}
+
+export function swapColumns(
+  matrix: number[][],
+  firstColumn: number,
+  secondColumn: number
+) {
+  const swapped = [];
+  for (let i = 0; i < 9; i++) {
+    swapped[i] = Array(0);
+    for (let j = 0; j < 9; j++) {
+      swapped[i][j] = matrix[i][j];
+    }
+  }
+
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      swapped[Math.floor(firstColumn / 3 + i * 3)][
+        Math.floor((firstColumn % 3) + j * 3)
+      ] =
+        matrix[Math.floor(secondColumn / 3 + i * 3)][
+          Math.floor((secondColumn % 3) + j * 3)
+        ];
+
+      swapped[Math.floor(secondColumn / 3 + i * 3)][
+        Math.floor((secondColumn % 3) + j * 3)
+      ] =
+        matrix[Math.floor(firstColumn / 3 + i * 3)][
+          Math.floor((firstColumn % 3) + j * 3)
         ];
     }
   }
