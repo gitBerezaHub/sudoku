@@ -4,13 +4,15 @@ import {
   createBasicMatrix,
   matrixTransposing,
   swapColumns,
-  swapRows,
+  swapSmallColumns,
+  swapSmallRows,
 } from "@/logic/logic";
 
 let matrix = createBasicMatrix();
 let trasposing = matrixTransposing(matrix);
-let swappedRows = swapRows(matrix, 0, 8);
-let swappedColumns = swapColumns(matrix, 6, 8);
+let swappedSmallRows = swapSmallRows(matrix, 0, 8);
+let swappedSmallColumns = swapSmallColumns(matrix, 6, 8);
+let swappedColumns = swapColumns(matrix, 0, 1);
 </script>
 
 <template>
