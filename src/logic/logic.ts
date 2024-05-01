@@ -109,3 +109,26 @@ export function swapColumns(
   }
   return swapped;
 }
+
+export function swapRows(
+  matrix: number[][],
+  firstRow: number,
+  secondRow: number
+) {
+  let swapped = [];
+  for (let i = 0; i < 9; i++) {
+    swapped[i] = Array(0);
+    for (let j = 0; j < 9; j++) {
+      swapped[i][j] = matrix[i][j];
+    }
+  }
+
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 9; j++) {
+      swapped[firstRow * 3 + i][j] = matrix[secondRow * 3 + i][j];
+      swapped[secondRow * 3 + i][j] = matrix[firstRow * 3 + i][j];
+    }
+  }
+
+  return swapped;
+}
