@@ -26,10 +26,4 @@ const props = defineProps({
   </div>
 </template>
 
-<style scoped lang="scss">
-.wrapper-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  border: 1px solid #000;
-}
-</style>
+<style scoped lang="scss"></style>
