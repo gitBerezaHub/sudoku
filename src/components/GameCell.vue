@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { defineProps } from "vue";
 
 const props = defineProps({
@@ -9,7 +9,11 @@ const props = defineProps({
   },
 });
 const num = ref(props.cellValue);
-
+onMounted(() => {
+  if (!num.value) {
+    console.log(0);
+  }
+});
 watch(
   () => props,
   () => {
@@ -19,7 +23,7 @@ watch(
 </script>
 
 <template>
-  <input class="cell" v-model="num" />
+  <input class="cell" v-model="num" :style="!num && 'background-color: #f00'" />
 </template>
 
 <style scoped lang="scss">

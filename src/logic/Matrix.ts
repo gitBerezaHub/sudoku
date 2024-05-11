@@ -1,5 +1,5 @@
 export class Matrix {
-  matrix: number[][];
+  matrix: number[][] | string[][];
 
   constructor() {
     this.matrix = this.createBasicMatrix();
@@ -111,5 +111,73 @@ export class Matrix {
         this.swapSmallRows();
       }
     }
+  }
+
+  deleteCell(quantity: number) {
+    for (let i = 0; i < quantity; i++) {
+      const row = Math.round(Math.random() * 8);
+      const column = Math.round(Math.random() * 8);
+      if (this.matrix[row][column] && this.isMatrixSolvable(row, column)) {
+        this.matrix[row][column] = "";
+      } else {
+        i--;
+      }
+    }
+  }
+
+  isMatrixSolvable(row: number, column: number) {
+    let possible = "123456789";
+    possible = this.findPossibleNumsSquare(possible, row, column);
+    if (possible.length > 1) {
+      possible = this.findPossibleNumsColumn(possible, row, column);
+    }
+    if (possible.length > 1) {
+      possible = this.findPossibleNumsRow(possible, row, column);
+    }
+    return possible.length <= 1;
+  }
+
+  findPossibleNumsSquare(possibleNums: string, row: number, column: number) {
+    const top = row - (row % 3);
+    const left = column - (column % 3);
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (this.matrix[top + i][left + j] !== this.matrix[row][column]) {
+          possibleNums = possibleNums.replace(
+            String(this.matrix[top + i][left + j]),
+            ""
+          );
+        }
+      }
+    }
+    return possibleNums;
+  }
+
+  findPossibleNumsRow(possibleNums: string, row: number, lostColumn: number) {
+    for (let column = 0; column < 9; column++) {
+      if (column !== lostColumn) {
+        possibleNums = possibleNums.replace(
+          String(this.matrix[row][column]),
+          ""
+        );
+      }
+    }
+    return possibleNums;
+  }
+
+  findPossibleNumsColumn(
+    possibleNums: string,
+    lostRow: number,
+    column: number
+  ) {
+    for (let row = 0; row < 9; row++) {
+      if (row !== lostRow) {
+        possibleNums = possibleNums.replace(
+          String(this.matrix[row][column]),
+          ""
+        );
+      }
+    }
+    return possibleNums;
   }
 }

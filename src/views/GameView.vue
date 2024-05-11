@@ -4,6 +4,7 @@ import { Matrix } from "@/logic/Matrix";
 
 const matrix = new Matrix();
 matrix.shuffleMatrix();
+matrix.deleteCell(30);
 </script>
 
 <template>
