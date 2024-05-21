@@ -4,7 +4,6 @@ import { Matrix } from "@/logic/Matrix";
 
 const matrix = new Matrix();
 matrix.shuffleMatrix();
-matrix.deleteCell(30);
 </script>
 
 <template>
@@ -21,7 +20,5 @@ main {
 }
 .field {
   margin-top: 10vh;
-  width: 378px;
-  height: 378px;
 }
 </style>

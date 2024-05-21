@@ -114,6 +114,7 @@ export class Matrix {
   }
 
   deleteCell(quantity: number) {
+    // MUST BE REWRITTEN. DOESN'T WORK!
     for (let i = 0; i < quantity; i++) {
       const row = Math.round(Math.random() * 8);
       const column = Math.round(Math.random() * 8);
@@ -134,7 +135,7 @@ export class Matrix {
     if (possible.length > 1) {
       possible = this.findPossibleNumsRow(possible, row, column);
     }
-    return possible.length <= 1;
+    return possible.length <= 5;
   }
 
   findPossibleNumsSquare(possibleNums: string, row: number, column: number) {
