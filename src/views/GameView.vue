@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import GameField from "@/components/GameField.vue";
 import { Matrix } from "@/logic/Matrix";
+import { useStore } from "vuex";
 
-const matrix = new Matrix();
-matrix.shuffleMatrix();
+const store = useStore();
+const createdMatrix = new Matrix();
+createdMatrix.shuffleMatrix();
+store.state.matrix = createdMatrix.matrix;
 </script>
 
 <template>
   <main>
-    <game-field class="field" :matrix="matrix.matrix" />
+    <game-field class="field" :matrix="store.state.matrix" />
   </main>
 </template>
 

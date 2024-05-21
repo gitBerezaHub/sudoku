@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { defineProps, onMounted, ref, watch } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
 
 const props = defineProps({
   cellValue: {
@@ -12,9 +15,10 @@ const props = defineProps({
   },
 });
 const num = ref(props.cellValue);
+let cellID = props.coords.column * 9 + props.coords.row;
+
 function drawBorders(cell: Element[] | any) {
   // attribute has HTMLCollectionOf<Element> type. TypeScript error
-  let cellID = props.coords.column * 9 + props.coords.row;
   let fatLineWidth = "2";
   let thinLineWidth = "1";
   let isTopBordered =
@@ -29,6 +33,22 @@ function drawBorders(cell: Element[] | any) {
     `border-width: ${isTopBordered}px ${isRightBordered}px ${isBottomBordered}px ${isLeftBordered}px`
   );
 }
+
+function drawFocus(num: number) {
+  const cell = document.getElementsByClassName("cell");
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      if (store.state.matrix[i][j] === num) {
+        if (cell) {
+          cell[i * 9 + j].setAttribute("style", "background: #96e6f7");
+        }
+      } else {
+        cell[i * 9 + j].setAttribute("style", "background: #fff");
+      }
+    }
+  }
+}
+
 onMounted(() => {
   const cell = document.getElementsByClassName("cell");
   if (cell) {
@@ -44,7 +64,7 @@ watch(
 </script>
 
 <template>
-  <input class="cell" v-model="num" id="cell" />
+  <div class="cell" id="cell" @click="drawFocus(num)">{{ num }}</div>
 </template>
 
 <style scoped lang="scss">
