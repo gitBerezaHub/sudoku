@@ -40,10 +40,10 @@ function drawFocus(num: number) {
     for (let j = 0; j < 9; j++) {
       if (store.state.matrix[i][j] === num) {
         if (cell) {
-          cell[i * 9 + j].setAttribute("style", "background: #96e6f7");
+          cell[i * 9 + j].classList.add("focused");
         }
       } else {
-        cell[i * 9 + j].setAttribute("style", "background: #fff");
+        cell[i * 9 + j].classList.remove("focused");
       }
     }
   }
@@ -75,5 +75,9 @@ $cellSide: clamp(36px, 9vw, 80px);
   border: 1px solid #000;
   width: $cellSide;
   height: $cellSide;
+}
+
+.focused {
+  background-color: #96e6f7;
 }
 </style>
