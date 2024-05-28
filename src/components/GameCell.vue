@@ -61,10 +61,19 @@ watch(
     num.value = props.cellValue;
   }
 );
+
+watch(
+  () => store.state.selectedNum,
+  () => {
+    drawFocus(store.state.selectedNum);
+  }
+);
 </script>
 
 <template>
-  <div class="cell" id="cell" @click="drawFocus(num)">{{ num }}</div>
+  <div class="cell" id="cell" @click="store.state.selectedNum = num">
+    {{ num }}
+  </div>
 </template>
 
 <style scoped lang="scss">
