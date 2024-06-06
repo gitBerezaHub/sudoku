@@ -9,7 +9,6 @@ export default createStore({
   mutations: {
     makeSelected(state, num: number) {
       state.selectedNum = num;
-      //   eslint-disable-next-line
     },
   },
   actions: {},

@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { defineProps, onMounted, ref, watch } from "vue";
+import { defineProps, onMounted, PropType, ref, watch } from "vue";
 import { useStore } from "vuex";
+import { Cell } from "@/logic/Matrix";
 
 const store = useStore();
 
 const props = defineProps({
   cellValue: {
-    type: Number,
+    type: Object as PropType<Cell>,
     required: true,
   },
   coords: {
@@ -16,6 +17,30 @@ const props = defineProps({
 });
 const num = ref(props.cellValue);
 let cellID = props.coords.column * 9 + props.coords.row;
+
+function clickCell(cellValue: Cell) {
+  if (!cellValue.isHide) {
+    store.state.selectedNum = num.value.digit;
+  } else {
+    if (store.state.selectedNum) {
+      if (num.value.digit === store.state.selectedNum) {
+        num.value.isHide = false;
+        drawFocus(num.value.digit);
+      } else {
+        const cell = document.getElementsByClassName("cell");
+        if (cell) {
+          cell[props.coords.row * 9 + props.coords.column].classList.add(
+            "incorrect"
+          );
+          num.value.incorrectDigit = store.state.selectedNum;
+          cell[props.coords.row * 9 + props.coords.column].textContent = String(
+            num.value.incorrectDigit
+          );
+        }
+      }
+    }
+  }
+}
 
 function drawBorders(cell: Element[] | any) {
   // attribute has HTMLCollectionOf<Element> type. TypeScript error
@@ -38,8 +63,12 @@ function drawFocus(num: number) {
   const cell = document.getElementsByClassName("cell");
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
-      if (store.state.matrix[i][j] === num) {
+      if (
+        store.state.matrix[i][j].digit === num &&
+        !store.state.matrix[i][j].isHide
+      ) {
         if (cell) {
+          cell[i * 9 + j].classList.remove("incorrect");
           cell[i * 9 + j].classList.add("focused");
         }
       } else {
@@ -58,7 +87,7 @@ onMounted(() => {
 watch(
   () => props,
   () => {
-    num.value = props.cellValue;
+    num.value.digit = props.cellValue?.digit;
   }
 );
 
@@ -71,8 +100,8 @@ watch(
 </script>
 
 <template>
-  <div class="cell" id="cell" @click="store.state.selectedNum = num">
-    {{ num }}
+  <div class="cell" id="cell" @click="clickCell(num)">
+    {{ !num.isHide ? num.digit : "" }}
   </div>
 </template>
 
@@ -88,5 +117,9 @@ $cellSide: clamp(36px, 9vw, 80px);
 
 .focused {
   background-color: #96e6f7;
+}
+
+.incorrect {
+  background-color: #f13535;
 }
 </style>

@@ -7,6 +7,7 @@ import NumsPanel from "@/components/NumsPanel.vue";
 const store = useStore();
 const createdMatrix = new Matrix();
 createdMatrix.shuffleMatrix();
+createdMatrix.deleteCell(10);
 store.state.matrix = createdMatrix.matrix;
 </script>
 

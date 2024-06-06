@@ -1,28 +1,32 @@
+export type Cell = {
+  digit: number;
+  incorrectDigit: number;
+  isHide: boolean;
+};
+
 export class Matrix {
-  matrix: number[][] | string[][];
+  matrix: Cell[][];
 
   constructor() {
-    this.matrix = this.createBasicMatrix();
-  }
-
-  private createBasicMatrix() {
-    const matrix = [];
+    this.matrix = [];
     for (let i = 0; i < 9; i++) {
-      matrix[i] = Array(0);
+      this.matrix[i] = [];
       for (let j = 0; j < 9; j++) {
-        matrix[i][j] = Math.floor(((i * 3 + i / 3 + j) % 9) + 1);
-        // matrix[i][j] = `${i}, ${j}`;
+        this.matrix[i][j] = {
+          digit: Math.floor(((i * 3 + i / 3 + j) % 9) + 1),
+          incorrectDigit: 0,
+          isHide: false,
+        };
       }
     }
-    return matrix;
   }
 
   matrixTranpose() {
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < i; j++) {
-        const temp = this.matrix[i][j];
-        this.matrix[i][j] = this.matrix[j][i];
-        this.matrix[j][i] = temp;
+        const temp = this.matrix[i][j].digit;
+        this.matrix[i][j].digit = this.matrix[j][i].digit;
+        this.matrix[j][i].digit = temp;
       }
     }
   }
@@ -36,10 +40,10 @@ export class Matrix {
 
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 3; j++) {
-        const temp = this.matrix[i][firstColumn * 3 + j];
-        this.matrix[i][firstColumn * 3 + j] =
-          this.matrix[i][secondColumn * 3 + j];
-        this.matrix[i][secondColumn * 3 + j] = temp;
+        const temp = this.matrix[i][firstColumn * 3 + j].digit;
+        this.matrix[i][firstColumn * 3 + j].digit =
+          this.matrix[i][secondColumn * 3 + j].digit;
+        this.matrix[i][secondColumn * 3 + j].digit = temp;
       }
     }
   }
@@ -53,9 +57,10 @@ export class Matrix {
 
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 9; j++) {
-        const temp = this.matrix[firstRow * 3 + i][j];
-        this.matrix[firstRow * 3 + i][j] = this.matrix[secondRow * 3 + i][j];
-        this.matrix[secondRow * 3 + i][j] = temp;
+        const temp = this.matrix[firstRow * 3 + i][j].digit;
+        this.matrix[firstRow * 3 + i][j].digit =
+          this.matrix[secondRow * 3 + i][j].digit;
+        this.matrix[secondRow * 3 + i][j].digit = temp;
       }
     }
   }
@@ -69,10 +74,10 @@ export class Matrix {
     }
 
     for (let i = 0; i < 9; i++) {
-      const temp = this.matrix[i][firstColumn + area * 3];
-      this.matrix[i][firstColumn + area * 3] =
-        this.matrix[i][secondColumn + area * 3];
-      this.matrix[i][secondColumn + area * 3] = temp;
+      const temp = this.matrix[i][firstColumn + area * 3].digit;
+      this.matrix[i][firstColumn + area * 3].digit =
+        this.matrix[i][secondColumn + area * 3].digit;
+      this.matrix[i][secondColumn + area * 3].digit = temp;
     }
   }
 
@@ -85,10 +90,10 @@ export class Matrix {
     }
 
     for (let i = 0; i < 9; i++) {
-      const temp = this.matrix[firstRow + area * 3][i];
-      this.matrix[firstRow + area * 3][i] =
-        this.matrix[secondRow + area * 3][i];
-      this.matrix[secondRow + area * 3][i] = temp;
+      const temp = this.matrix[firstRow + area * 3][i].digit;
+      this.matrix[firstRow + area * 3][i].digit =
+        this.matrix[secondRow + area * 3][i].digit;
+      this.matrix[secondRow + area * 3][i].digit = temp;
     }
   }
 
@@ -118,75 +123,19 @@ export class Matrix {
     for (let i = 0; i < quantity; i++) {
       const row = Math.round(Math.random() * 8);
       const column = Math.round(Math.random() * 8);
-      if (this.matrix[row][column] && this.isMatrixSolvable(row, column)) {
-        this.matrix[row][column] = "";
+      if (!this.matrix[row][column].isHide) {
+        this.matrix[row][column].isHide = true;
       } else {
         i--;
       }
     }
   }
 
-  isMatrixSolvable(row: number, column: number) {
-    let possible = "123456789";
-    possible = this.findPossibleNumsSquare(possible, row, column);
-    if (possible.length > 1) {
-      possible = this.findPossibleNumsColumn(possible, row, column);
-    }
-    if (possible.length > 1) {
-      possible = this.findPossibleNumsRow(possible, row, column);
-    }
-    return possible.length <= 5;
-  }
-
-  findPossibleNumsSquare(possibleNums: string, row: number, column: number) {
-    const top = row - (row % 3);
-    const left = column - (column % 3);
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        if (this.matrix[top + i][left + j] !== this.matrix[row][column]) {
-          possibleNums = possibleNums.replace(
-            String(this.matrix[top + i][left + j]),
-            ""
-          );
-        }
-      }
-    }
-    return possibleNums;
-  }
-
-  findPossibleNumsRow(possibleNums: string, row: number, lostColumn: number) {
-    for (let column = 0; column < 9; column++) {
-      if (column !== lostColumn) {
-        possibleNums = possibleNums.replace(
-          String(this.matrix[row][column]),
-          ""
-        );
-      }
-    }
-    return possibleNums;
-  }
-
-  findPossibleNumsColumn(
-    possibleNums: string,
-    lostRow: number,
-    column: number
-  ) {
-    for (let row = 0; row < 9; row++) {
-      if (row !== lostRow) {
-        possibleNums = possibleNums.replace(
-          String(this.matrix[row][column]),
-          ""
-        );
-      }
-    }
-    return possibleNums;
-  }
-
   getCoords(num: number) {
     const arr = [];
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
-        if (this.matrix[i][j] === num) {
+        if (this.matrix[i][j].digit === num) {
           arr.push({ row: i, column: j });
         }
       }
