@@ -36,6 +36,7 @@ function clickCell(cellValue: Cell) {
           cell[props.coords.row * 9 + props.coords.column].textContent = String(
             num.value.incorrectDigit
           );
+          store.commit("incrementMistake");
         }
       }
     }

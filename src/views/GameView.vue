@@ -3,6 +3,7 @@ import GameField from "@/components/GameField.vue";
 import { Matrix } from "@/logic/Matrix";
 import { useStore } from "vuex";
 import NumsPanel from "@/components/NumsPanel.vue";
+import MistakesCounter from "@/components/MistakesCounter.vue";
 
 const store = useStore();
 const createdMatrix = new Matrix();
@@ -13,6 +14,7 @@ store.state.matrix = createdMatrix.matrix;
 
 <template>
   <main>
+    <mistakes-counter />
     <game-field class="field" :matrix="store.state.matrix" />
     <nums-panel />
   </main>
