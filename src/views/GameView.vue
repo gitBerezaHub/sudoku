@@ -8,7 +8,7 @@ import MistakesCounter from "@/components/MistakesCounter.vue";
 const store = useStore();
 const createdMatrix = new Matrix();
 createdMatrix.shuffleMatrix();
-createdMatrix.deleteCell(10);
+createdMatrix.deleteCell(30);
 store.state.matrix = createdMatrix.matrix;
 </script>
 
