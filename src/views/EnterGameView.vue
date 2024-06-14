@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import router from "@/router";
+import store from "@/store";
 
 const openModal = ref(false);
+function setComplexity(level: number) {
+  store.state.complexityLevel = level;
+  router.push("/game");
+}
 </script>
 
 <template>
@@ -14,13 +19,11 @@ const openModal = ref(false);
     <button class="new-game-btn" @click="openModal = true">Новая игра</button>
   </main>
   <div v-if="openModal" class="mode-modal">
-    <button class="mode-button" @click="router.push('/game')">быстрое</button>
-    <button class="mode-button" @click="router.push('/game')">легкий</button>
-    <button class="mode-button" @click="router.push('/game')">средний</button>
-    <button class="mode-button" @click="router.push('/game')">сложный</button>
-    <button class="mode-button" @click="router.push('/game')">
-      гигантский
-    </button>
+    <button class="mode-button" @click="setComplexity(0)">быстрое</button>
+    <button class="mode-button" @click="setComplexity(1)">легкий</button>
+    <button class="mode-button" @click="setComplexity(2)">средний</button>
+    <button class="mode-button" @click="setComplexity(3)">сложный</button>
+    <button class="mode-button" @click="setComplexity(4)">гигантский</button>
   </div>
 </template>
 

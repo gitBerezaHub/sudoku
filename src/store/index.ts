@@ -5,6 +5,7 @@ export default createStore({
     matrix: [],
     selectedNum: 0,
     mistakesQuantity: 0,
+    complexityLevel: 0,
   },
   getters: {},
   mutations: {

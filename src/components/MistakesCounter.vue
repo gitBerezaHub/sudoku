@@ -13,7 +13,7 @@ watch(
 </script>
 
 <template>
-  <h1>Ошибки: {{ store.state.mistakesQuantity }}/3</h1>
+  <p>Ошибки: {{ store.state.mistakesQuantity }}/3</p>
 </template>
 
 <style scoped lang="scss"></style>
