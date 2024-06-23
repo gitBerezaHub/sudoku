@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+import store from "@/store";
 let firstTime = 0;
 const seconds = ref(0);
 function testTimer() {
+  if (store.state.isGamePaused) {
+    return 0;
+  }
   let time = new Date().getTime();
   if (!firstTime) {
     firstTime = time;
   }
   seconds.value = Math.floor((time - firstTime) / 1000);
+  store.state.gameTime = seconds.value;
   setTimeout(testTimer, 1000);
 }
 

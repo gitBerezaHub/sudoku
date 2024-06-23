@@ -6,6 +6,8 @@ export default createStore({
     selectedNum: 0,
     mistakesQuantity: 0,
     complexityLevel: 0,
+    isGamePaused: false,
+    gameTime: 0,
   },
   getters: {},
   mutations: {
