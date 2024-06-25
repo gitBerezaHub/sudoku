@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import store from "@/store";
 let firstTime = 0;
 const seconds = ref(0);
